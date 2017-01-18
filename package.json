@@ -1,0 +1,59 @@
+{
+    "author": "Edward Dam",
+    "dependencies": {
+        "pebble-clay": "^1.0.0",
+        "pebblejs": "^1.0.0"
+    },
+    "keywords": [],
+    "name": "rainfall-v1.0",
+    "pebble": {
+        "capabilities": [
+            "configurable"
+        ],
+        "displayName": "Rainfall v1.0",
+        "enableMultiJS": true,
+        "messageKeys": [
+            "message_keys"
+        ],
+        "projectType": "native",
+        "resources": {
+            "media": [
+                {
+                    "file": "images/splash.png",
+                    "name": "SPLASH",
+                    "targetPlatforms": [
+                        "aplite",
+                        "basalt",
+                        "chalk",
+                        "diorite"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/menu_icon.png",
+                    "menuIcon": true,
+                    "name": "MENU_ICON",
+                    "targetPlatforms": [
+                        "aplite",
+                        "basalt",
+                        "chalk",
+                        "diorite"
+                    ],
+                    "type": "bitmap"
+                }
+            ]
+        },
+        "sdkVersion": "3",
+        "targetPlatforms": [
+            "aplite",
+            "basalt",
+            "chalk",
+            "diorite"
+        ],
+        "uuid": "7c5322de-332a-4bad-b7d1-1bc442605f0e",
+        "watchapp": {
+            "watchface": false
+        }
+    },
+    "version": "1.0.0"
+}
