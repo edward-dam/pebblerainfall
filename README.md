@@ -7,6 +7,7 @@
 ###screenshots
 
 ![basalt.png](/assets/basalt.png)
+![basalt.png](/assets/basalt-forecast.png)
 
 ###banner
 
