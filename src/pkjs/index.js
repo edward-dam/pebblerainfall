@@ -96,7 +96,7 @@ mainWind.on('click', 'select', function(e) {
   var currentSumm = currentData.summary;
   var currentTemp = Math.round((currentData.temperature - 32) * 5 / 9);
   var currentRain = Math.round((currentData.precipIntensity * 25.4) * 10) / 10;
-  for (var i = 1; i < 12; i++) {
+  for (var i = 1; i < 25; i++) {
     determinetime(apidata.hourly.data[i]);
     determinerain(apidata.hourly.data[i]);
     //console.log('hourlyTime' + i + ': ' + window["hourlyTime" + i]);
@@ -117,13 +117,14 @@ mainWind.on('click', 'select', function(e) {
   rainfallMenu.item(1, 0, { icon: icon,
     title: 'Now', subtitle: 'Rainfall: ' + currentRain + 'mm'
   });
-  for (i = 1; i < 12; i++) {
+  for (i = 1; i < 25; i++) {
     rainfallMenu.item(1, i, { icon: icon,
       title: window["hourlyTime" + i],
       subtitle: 'Rainfall: ' + window["hourlyRain" + i] + 'mm'
     });
   }
   rainfallMenu.show();
+  mainWind.hide();
 
   // function determine time
   function determinetime(data) {
