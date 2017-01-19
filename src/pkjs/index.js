@@ -14,11 +14,18 @@ var Vector2  = require('pebblejs/lib/vector2');
 var ajax     = require('pebblejs/lib/ajax');
 var Settings = require('pebblejs/settings');
 
+// collect api data
+var gpsLatitude;
+var gpsLongitude;
+var token = '6dc8bde763d1816f2e3f249ec11ee48f';
+//console.log('Saved apidata: ' + Settings.data('rainfallapi'));
+collectgpslocation(collectweatherdata);
+
 // definitions
 var window = new UI.Window();
 var windowSize = window.size();
 var size = new Vector2(windowSize.x, windowSize.y);
-var icon = 'images/menu_icon.png';
+var icon = 'images/rain_icon.png';
 var backgroundColor = 'black';
 var highlightBackgroundColor = 'white';
 var textColor = 'white';
@@ -27,7 +34,7 @@ var textAlign = 'center';
 var fontLarge = 'gothic-28-bold';
 var fontMedium = 'gothic-24-bold';
 var fontSmall = 'gothic-18-bold';
-var fontXSmall = 'gothic-14-bold';
+//var fontXSmall = 'gothic-14-bold';
 function position(height){
   return new Vector2(0, windowSize.y / 2 + height);
 }
@@ -78,7 +85,83 @@ mainWind.on('click', 'down', function(e) {
 });
 
 // select button
-//mainWind.on('click', 'select', function(e) {
-//});
+mainWind.on('click', 'select', function(e) {
+
+  // load collected api data
+  var apidata = Settings.data('rainfallapi');
+  //console.log('Loaded apidata: ' + apidata);
+  
+  // determine api data
+  var currentData = apidata.currently;
+  var currentSumm = currentData.summary;
+  var currentTemp = Math.round((currentData.temperature - 32) * 5 / 9);
+  var currentRain = Math.round((currentData.precipIntensity * 25.4) * 10) / 10;
+  for (var i = 1; i < 12; i++) {
+    determinetime(apidata.hourly.data[i]);
+    determinerain(apidata.hourly.data[i]);
+    //console.log('hourlyTime' + i + ': ' + window["hourlyTime" + i]);
+    //console.log('hourlyRain' + i + ': ' + window["hourlyRain" + i]);
+  }
+
+  // display screen
+  var rainfallMenu = new UI.Menu({ //fullscreen: true,
+    textColor: textColor, highlightBackgroundColor: highlightBackgroundColor,
+    backgroundColor: backgroundColor, highlightTextColor: highlightTextColor,
+    status: { separator: 'none', color: textColor, backgroundColor: backgroundColor }
+  });
+  rainfallMenu.section(0, { title: 'Current Weather' });
+  rainfallMenu.item(0, 0, { //icon: icon,
+    title: currentSumm, subtitle: 'Feels Like: ' + currentTemp + '°C',
+  });
+  rainfallMenu.section(1, {title: 'Rainfall Forecast'});
+  rainfallMenu.item(1, 0, { icon: icon,
+    title: 'Now', subtitle: 'Rainfall: ' + currentRain + 'mm'
+  });
+  for (i = 1; i < 12; i++) {
+    rainfallMenu.item(1, i, { icon: icon,
+      title: window["hourlyTime" + i],
+      subtitle: 'Rainfall: ' + window["hourlyRain" + i] + 'mm'
+    });
+  }
+  rainfallMenu.show();
+
+  // function determine time
+  function determinetime(data) {
+    var time = new Date(data.time*1000);
+    var hour = time.getHours();
+    var minutes = time.getMinutes();
+    minutes = minutes > 9 ? minutes : '0' + minutes;
+    window["hourlyTime" + i] = hour + ":" + minutes;
+  }
+  
+  // function determine rain
+  function determinerain(data) {
+    var rain = Math.round((data.precipIntensity * 25.4) * 10) / 10;
+    window["hourlyRain" + i] = rain;
+  }
+});
 
 // functions
+
+function collectgpslocation(callback) {
+  navigator.geolocation.getCurrentPosition(function(api) {
+    //console.log('Collected gpsLocation: ' + api.coords);
+    gpsLatitude = api.coords.latitude;
+    gpsLongitude = api.coords.longitude;
+    //console.log('Latitude gpsLocation: ' + gpsLatitude);
+    //console.log('Longitude gpsLocation: ' + gpsLongitude);
+    callback();
+  });
+}
+
+function collectweatherdata() {
+  var url = 'https://api.darksky.net/forecast/' + token + '/' +
+  gpsLatitude + ',' + gpsLongitude + '?exclude=[minutely,daily,alerts,flags]';
+  //console.log('url: ' + url);
+  ajax({ url: url, method: 'get', type: 'json' },
+    function(api){
+      //console.log('Collected apidata: ' + api);
+      Settings.data('rainfallapi', api);
+    }
+  );
+}

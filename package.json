@@ -19,6 +19,17 @@
         "resources": {
             "media": [
                 {
+                    "file": "images/rain_icon.png",
+                    "name": "RAIN_ICON",
+                    "targetPlatforms": [
+                        "aplite",
+                        "basalt",
+                        "chalk",
+                        "diorite"
+                    ],
+                    "type": "bitmap"
+                },
+                {
                     "file": "images/splash.png",
                     "name": "SPLASH",
                     "targetPlatforms": [
