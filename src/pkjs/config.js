@@ -9,25 +9,20 @@ module.exports = [
     "type": "text",
     "defaultValue": "by Edward Dam"
   },
-  {
-    "type": "section",
-    "items": [
-      {
-        "type": "heading",
-        "defaultValue": "Powered by Dark Sky"
-      },
-      {
-        "type": "text",
-        "defaultValue": "https://darksky.net/poweredby/"
-      },
-    ]
+  { "type": "section", "items": [
+    { "type": "heading", "defaultValue": "Temperature" },
+    { "type": "text", "defaultValue": "Please Choose Celsius or Fahrenheit" },
+    { "type": "radiogroup", "messageKey": "temp_degrees", "options": [
+      { "label": "Celsius °C", "value": "celsius" },
+      { "label": "Fahrenheit °F", "value": "fahrenheit" } ],
+    "defaultValue": "celsius" } ]
   },
   {
     "type": "text",
-    "defaultValue": "Thank you for using my watch app."
+    "defaultValue": "Powered by DarkSky.net"
   },
   {
     "type": "submit",
-    "defaultValue": "Exit"
+    "defaultValue": "Submit"
   }
 ];

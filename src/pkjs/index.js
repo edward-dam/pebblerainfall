@@ -77,7 +77,7 @@ mainWind.on('click', 'down', function(e) {
   downText.position(position(-5));
   downHead.font(fontMedium);
   downText.font(fontSmall);
-  downHead.text('Rainfall v1.0');
+  downHead.text('Rainfall v1.1');
   downText.text('by Edward Dam');
   downWind.add(downHead);
   downWind.add(downText);
@@ -91,11 +91,20 @@ mainWind.on('click', 'select', function(e) {
   var apidata = Settings.data('rainfallapi');
   //console.log('Loaded apidata: ' + apidata);
   
+  // load options
+  var options = JSON.parse(localStorage.getItem('clay-settings'));
+  //console.log('Loaded temp_degrees option: ' + options.temp_degrees);
+  
   // determine api data
+  var currentTemp;
   var currentData = apidata.currently;
   var currentSumm = currentData.summary;
-  var currentTemp = Math.round((currentData.temperature - 32) * 5 / 9);
   var currentRain = Math.round((currentData.precipIntensity * 25.4) * 10) / 10;
+  if ( options.temp_degrees === "fahrenheit" ) {
+    currentTemp = Math.round(currentData.temperature) + '°F';
+  } else {
+    currentTemp = Math.round((currentData.temperature - 32) * 5 / 9) + '°C';
+  }
   for (var i = 1; i < 25; i++) {
     determinetime(apidata.hourly.data[i]);
     determinerain(apidata.hourly.data[i]);
@@ -111,7 +120,7 @@ mainWind.on('click', 'select', function(e) {
   });
   rainfallMenu.section(0, { title: 'Current Weather' });
   rainfallMenu.item(0, 0, { //icon: icon,
-    title: currentSumm, subtitle: 'Feels Like: ' + currentTemp + '°C',
+    title: currentSumm, subtitle: 'Feels Like: ' + currentTemp,
   });
   rainfallMenu.section(1, {title: 'Rainfall Forecast'});
   rainfallMenu.item(1, 0, { icon: icon,

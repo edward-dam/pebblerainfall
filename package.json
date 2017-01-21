@@ -13,7 +13,8 @@
         "displayName": "Rainfall v1.1",
         "enableMultiJS": true,
         "messageKeys": [
-            "message_keys"
+            "message_keys",
+            "temp_degrees"
         ],
         "projectType": "native",
         "resources": {
@@ -66,5 +67,5 @@
             "watchface": false
         }
     },
-    "version": "1.10.0"
+    "version": "1.11.0"
 }
