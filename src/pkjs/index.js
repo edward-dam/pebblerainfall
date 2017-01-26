@@ -99,10 +99,10 @@ mainWind.on('click', 'select', function(e) {
   var currentData = apidata.currently;
   var currentSumm = currentData.summary;
   var currentRain = Math.round((currentData.precipIntensity * 25.4) * 10) / 10;
-  var currentTemp = Math.round((currentData.temperature - 32) * 5 / 9) + '°C';
+  var currentTemp = Math.round((currentData.apparentTemperature - 32) * 5 / 9) + '°C';
   if ( options !== null ) {
     if ( options.temp_degrees === "fahrenheit" ) {
-      currentTemp = Math.round(currentData.temperature) + '°F';
+      currentTemp = Math.round(currentData.apparentTemperature) + '°F';
     }
   }
   for (var i = 1; i < 25; i++) {
@@ -140,6 +140,7 @@ mainWind.on('click', 'select', function(e) {
     var time = new Date(data.time*1000);
     var hour = time.getHours();
     var minutes = time.getMinutes();
+    hour = hour > 9 ? hour : '0' + hour;
     minutes = minutes > 9 ? minutes : '0' + minutes;
     window["hourlyTime" + i] = hour + ":" + minutes;
   }
