@@ -96,14 +96,14 @@ mainWind.on('click', 'select', function(e) {
   //console.log('Loaded temp_degrees option: ' + options.temp_degrees);
   
   // determine api data
-  var currentTemp;
   var currentData = apidata.currently;
   var currentSumm = currentData.summary;
   var currentRain = Math.round((currentData.precipIntensity * 25.4) * 10) / 10;
-  if ( options.temp_degrees === "fahrenheit" ) {
-    currentTemp = Math.round(currentData.temperature) + '°F';
-  } else {
-    currentTemp = Math.round((currentData.temperature - 32) * 5 / 9) + '°C';
+  var currentTemp = Math.round((currentData.temperature - 32) * 5 / 9) + '°C';
+  if ( options !== null ) {
+    if ( options.temp_degrees === "fahrenheit" ) {
+      currentTemp = Math.round(currentData.temperature) + '°F';
+    }
   }
   for (var i = 1; i < 25; i++) {
     determinetime(apidata.hourly.data[i]);
