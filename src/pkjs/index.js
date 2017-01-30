@@ -101,20 +101,21 @@ mainWind.on('click', 'select', function(e) {
   var currentData = apidata.currently;
   var currentSumm = currentData.summary;
   var currentRain = Math.round((currentData.precipIntensity * 25.4) * 10) / 10;
+  if ( currentRain > 0 ) {
+    currentIcon = iconRain;
+  }
   var currentTemp = Math.round((currentData.apparentTemperature - 32) * 5 / 9) + '°C';
   if ( options !== null ) {
     if ( options.temp_degrees === "fahrenheit" ) {
       currentTemp = Math.round(currentData.apparentTemperature) + '°F';
     }
   }
-  if ( currentRain > 0 ) {
-    currentIcon = iconRain;
-  }
   for (var i = 1; i < 25; i++) {
     determinetime(apidata.hourly.data[i]);
     determinerain(apidata.hourly.data[i]);
     //console.log('hourlyTime' + i + ': ' + window["hourlyTime" + i]);
     //console.log('hourlyRain' + i + ': ' + window["hourlyRain" + i]);
+    //console.log('hourlyIcon' + i + ': ' + window["hourlyIcon" + i]);
   }
 
   // display screen
