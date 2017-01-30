@@ -3,7 +3,7 @@
 module.exports = [
   {
     "type": "heading",
-    "defaultValue": "Rainfall v1.1"
+    "defaultValue": "Rainfall v1.2"
   },
   {
     "type": "text",

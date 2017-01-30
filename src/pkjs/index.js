@@ -25,7 +25,8 @@ collectgpslocation(collectweatherdata);
 var window = new UI.Window();
 var windowSize = window.size();
 var size = new Vector2(windowSize.x, windowSize.y);
-var icon = 'images/rain_icon.png';
+var iconRain = 'images/rain_icon.png';
+var iconSun = 'images/sun_icon.png';
 var backgroundColor = 'black';
 var highlightBackgroundColor = 'white';
 var textColor = 'white';
@@ -77,7 +78,7 @@ mainWind.on('click', 'down', function(e) {
   downText.position(position(-5));
   downHead.font(fontMedium);
   downText.font(fontSmall);
-  downHead.text('Rainfall v1.1');
+  downHead.text('Rainfall v1.2');
   downText.text('by Edward Dam');
   downWind.add(downHead);
   downWind.add(downText);
@@ -96,6 +97,7 @@ mainWind.on('click', 'select', function(e) {
   //console.log('Loaded temp_degrees option: ' + options.temp_degrees);
   
   // determine api data
+  var currentIcon = iconSun;
   var currentData = apidata.currently;
   var currentSumm = currentData.summary;
   var currentRain = Math.round((currentData.precipIntensity * 25.4) * 10) / 10;
@@ -105,6 +107,9 @@ mainWind.on('click', 'select', function(e) {
       currentTemp = Math.round(currentData.apparentTemperature) + '°F';
     }
   }
+  if ( currentRain > 0 ) {
+    currentIcon = iconRain;
+  }
   for (var i = 1; i < 25; i++) {
     determinetime(apidata.hourly.data[i]);
     determinerain(apidata.hourly.data[i]);
@@ -113,6 +118,7 @@ mainWind.on('click', 'select', function(e) {
   }
 
   // display screen
+
   var rainfallMenu = new UI.Menu({ //fullscreen: true,
     textColor: textColor, highlightBackgroundColor: highlightBackgroundColor,
     backgroundColor: backgroundColor, highlightTextColor: highlightTextColor,
@@ -123,11 +129,11 @@ mainWind.on('click', 'select', function(e) {
     title: currentSumm, subtitle: 'Feels Like: ' + currentTemp,
   });
   rainfallMenu.section(1, {title: 'Rainfall Forecast'});
-  rainfallMenu.item(1, 0, { icon: icon,
+  rainfallMenu.item(1, 0, { icon: currentIcon,
     title: 'Now', subtitle: 'Rainfall: ' + currentRain + 'mm'
   });
   for (i = 1; i < 25; i++) {
-    rainfallMenu.item(1, i, { icon: icon,
+    rainfallMenu.item(1, i, { icon: window["hourlyIcon" + i],
       title: window["hourlyTime" + i],
       subtitle: 'Rainfall: ' + window["hourlyRain" + i] + 'mm'
     });
@@ -148,6 +154,11 @@ mainWind.on('click', 'select', function(e) {
   // function determine rain
   function determinerain(data) {
     var rain = Math.round((data.precipIntensity * 25.4) * 10) / 10;
+    if ( rain > 0 ) {
+      window["hourlyIcon" + i] = iconRain;
+    } else {
+      window["hourlyIcon" + i] = iconSun;
+    }
     window["hourlyRain" + i] = rain;
   }
 });
