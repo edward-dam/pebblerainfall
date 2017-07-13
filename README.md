@@ -13,7 +13,7 @@
 
 ![banner.png](/assets/banner.png)
 
-###app store
+### app store
 
 https://apps.getpebble.com/applications/587fed2193254a8b9f000067
 
