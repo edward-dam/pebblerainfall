@@ -1,22 +1,22 @@
 # pebblerainfall
-### icons
+## icons
 
 ![icon-144.png](/assets/icon-144.png)
 ![icon-48.png](/assets/icon-48.png)
 
-### screenshots
+## screenshots
 
 ![basalt.png](/assets/basalt.png)
 ![basalt.png](/assets/basalt-forecast.png)
 
-### banner
+## banner
 
 ![banner.png](/assets/banner.png)
 
-### app store
+## app store
 
 https://apps.getpebble.com/en_US/application/587fed2193254a8b9f000067
 
-### description
+## description
 
 Hourly precip forecast, check whether you need to take your umbrella!
